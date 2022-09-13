@@ -1,3 +1,4 @@
+import { cpfDecorator } from './decorators/CustomerDecorator';
 import { CustomerModel } from './interfaces/Customer';
 import { Identity } from './interfaces/Identity';
 
@@ -5,9 +6,9 @@ export class Customer implements Identity, CustomerModel {
   name: string;
   lastName: string;
   age: number;
-  cpf: string;
-  _email: string;
-  _phone?: string | undefined;
+  private _cpf = '';
+  private _email: string;
+  private _phone?: string | undefined;
 
   constructor(
     private readonly id: string,
@@ -32,6 +33,15 @@ export class Customer implements Identity, CustomerModel {
 
   getName(): string {
     return this.name;
+  }
+
+  get cpf(): string {
+    return this._cpf;
+  }
+
+  @cpfDecorator
+  set cpf(value: string) {
+    this._cpf = value;
   }
 
   get email(): string {
